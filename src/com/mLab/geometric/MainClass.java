@@ -1,15 +1,11 @@
 package com.mLab.geometric;
-
-import com.mLab.geometric.model.enums.WorldSide;
 import com.mLab.geometric.file.FileStructure;
-import com.mLab.geometric.file.SearchTypes;
 
+import java.io.File;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by nadya on 6/25/14.
- */
 public class MainClass {
     public static void main(String[] args) {
         LinkedList<String> myLinkedList = new LinkedList<String>();
@@ -18,7 +14,6 @@ public class MainClass {
         }
         System.out.println(myLinkedList.toString());
 
-        WorldSide east = WorldSide.EAST;
         String email = "dkhsjdfh@fkhsf.am";
         String emailPatternStr="\\w+@\\w+\\.[a-zA-Z]{2,3}";// \p unicode
         Pattern emailPattern = Pattern.compile(emailPatternStr);
@@ -44,13 +39,16 @@ public class MainClass {
             System.out.println(matcher2.group(0));
         }
 
-        Pattern pattern = Pattern.compile("#(\\w+).?\\1");
 
        myLinkedList.add(2, "dddd");
         System.out.println(myLinkedList.toString());
 
-        FileStructure fileStructure = new FileStructure();
-        fileStructure.listFilesAndFolders("/home/aram/", SearchTypes.SEARCH_BY_PATH);
+
+        FileStructure fileStructure = new FileStructure("/home/nadya/IdeaProjects");
+        List<File> all = fileStructure.findExtension("java");
+        for(File f: all) {
+            System.out.println(f.getAbsolutePath());
+        }
 
     }
 }

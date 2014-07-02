@@ -1,8 +1,8 @@
 package com.mLab.geometric;
 
-/**
- * Created by nadya on 6/25/14.
- */
+
+
+
 public class LinkedList<T> {
     private Node firstNode;
     private Node lastNode;
@@ -49,6 +49,33 @@ public class LinkedList<T> {
         temp.next=newNode;
 
         length ++;
+    }
+
+    public void add(int index, LinkedList<T> newList) {
+        if(index == length) {
+            for(int i = 0; i < newList.length; i ++) {
+                add(newList.getItem(i));
+                length ++;
+            }
+        } else if(index == 0) {
+            newList.firstNode = firstNode;
+            firstNode = newList.lastNode;
+            length += newList.length;
+        }
+
+        Node temp = firstNode;
+
+        for(int i = 0; i < index-2; i ++) {
+            temp = temp.next;
+        }
+
+        newList.lastNode.next = temp.next;
+        temp.next = newList.firstNode;
+
+        length += newList.length;
+
+
+
     }
 
 
