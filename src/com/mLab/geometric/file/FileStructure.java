@@ -25,7 +25,7 @@ public class FileStructure {
         this.root = rootFile;
     }
 
-   public List<File> findAll() {
+    public List<File> findAll() {
        return findInDirectory(root,SearchType.ANY,null);
    }
     public List<File> findByName(String name) {
@@ -33,6 +33,15 @@ public class FileStructure {
     }
     public List<File> findExtension(String extension) {
         return findInDirectory(root,SearchType.EXTENSION,extension);
+    }
+
+    public List<File> findExtensions(String[] extensions) {
+        List<File> files = new ArrayList<File>();
+        for(int i= 0; i < extensions.length; i ++ ) {
+            files.addAll(findExtension(extensions[i]));
+        }
+
+        return files;
     }
 
     private List<File> findInDirectory(File dir,SearchType searchType,String part) {

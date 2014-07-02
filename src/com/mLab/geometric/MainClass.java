@@ -12,6 +12,13 @@ public class MainClass {
         for(int i = 0; i < 10; i ++) {
             myLinkedList.add("sdads " + i );
         }
+        LinkedList<String> newLinkedList = new LinkedList<String>();
+        for(int i = 0; i < 5; i ++) {
+            newLinkedList.add("ssss " + i );
+        }
+
+        myLinkedList.add(10,newLinkedList);
+        myLinkedList = myLinkedList.getItem(2,13);
         System.out.println(myLinkedList.toString());
 
         String email = "dkhsjdfh@fkhsf.am";
@@ -45,7 +52,8 @@ public class MainClass {
 
 
         FileStructure fileStructure = new FileStructure("/home/nadya/IdeaProjects");
-        List<File> all = fileStructure.findExtension("java");
+        String[] extensions = {"java", "class"};
+        List<File> all = fileStructure.findExtensions(extensions);
         for(File f: all) {
             System.out.println(f.getAbsolutePath());
         }

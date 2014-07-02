@@ -1,8 +1,6 @@
 package com.mLab.geometric;
 
 
-
-
 public class LinkedList<T> {
     private Node firstNode;
     private Node lastNode;
@@ -14,7 +12,7 @@ public class LinkedList<T> {
 
     public void add(T item) {
         Node newNode = new Node(item);
-        if(firstNode == null) {
+        if (firstNode == null) {
             firstNode = newNode;
             lastNode = newNode;
         } else {
@@ -22,56 +20,53 @@ public class LinkedList<T> {
             lastNode = newNode;
         }
 
-        length ++;
+        length++;
     }
 
-    public void add(int index,T item) {
-        if(index == length){
+    public void add(int index, T item) {
+        if (index == length) {
             add(item);
-            length ++;
-        }
-
-        else if(index == 0){
+            length++;
+        } else if (index == 0) {
             Node newNode = new Node(item);
             newNode.next = firstNode;
             firstNode = newNode;
-            length ++;
+            length++;
         }
 
         Node temp = firstNode;
 
-        for(int i = 0; i < index-2; i ++ ) {
+        for (int i = 0; i < index - 2; i++) {
             temp = temp.next;
         }
         Node newNode = new Node(item);
 
         newNode.next = temp.next;
-        temp.next=newNode;
+        temp.next = newNode;
 
-        length ++;
+        length++;
     }
 
     public void add(int index, LinkedList<T> newList) {
-        if(index == length) {
-            for(int i = 0; i < newList.length; i ++) {
-                add(newList.getItem(i));
-                length ++;
+        if (index == length) {
+            lastNode.next = newList.firstNode;
+            lastNode = newList.lastNode;
+        } else if (index == 0) {
+            newList.lastNode.next = firstNode;
+            firstNode = newList.firstNode;
+
+        } else {
+
+            Node temp = firstNode;
+
+            for (int i = 0; i < index - 2; i++) {
+                temp = temp.next;
             }
-        } else if(index == 0) {
-            newList.firstNode = firstNode;
-            firstNode = newList.lastNode;
-            length += newList.length;
+
+            newList.lastNode.next = temp.next;
+            temp.next = newList.firstNode;
+
         }
-
-        Node temp = firstNode;
-
-        for(int i = 0; i < index-2; i ++) {
-            temp = temp.next;
-        }
-
-        newList.lastNode.next = temp.next;
-        temp.next = newList.firstNode;
-
         length += newList.length;
 
 
@@ -79,26 +74,47 @@ public class LinkedList<T> {
     }
 
 
-
     public T getItem(int index) {
-        if(index < 0 || index >= length) {
+        if (index < 0 || index >= length) {
             return null;
         }
 
         Node temp = firstNode;
 
-        for(int i = 0; i < index-1; i ++ ) {
+        for (int i = 0; i < index - 1; i++) {
             temp = temp.next;
         }
-        return  temp.value;
+        return temp.value;
+    }
+
+
+    public LinkedList<T> getItem(int firstIndex, int secondIndex) {
+        if (firstIndex < 0 || firstIndex >= length || secondIndex < 0 || secondIndex > length) {
+            return null;
+        }
+        LinkedList<T> returnedLinkedList = new LinkedList<T>();
+        Node temp = firstNode;
+        if(firstIndex < secondIndex) {
+            for (int i = 0; i < firstIndex - 1; i++) {
+                temp = temp.next;
+            }
+
+            for(int i = 0; i < secondIndex-firstIndex; i ++) {
+                temp = temp.next;
+                returnedLinkedList.add(temp.value);
+            }
+
+        }
+
+        return returnedLinkedList;
     }
 
     public void deleteItem(int index) {
-        if(index < 0 || index >= length) {
+        if (index < 0 || index >= length) {
             return;
         }
 
-        if(length == 1) {
+        if (length == 1) {
             firstNode = null;
             lastNode = null;
             return;
@@ -106,11 +122,11 @@ public class LinkedList<T> {
 
         Node temp = firstNode;
 
-        for(int i = 0; i < index-1; i ++ ) {
+        for (int i = 0; i < index - 1; i++) {
             temp = temp.next;
         }
         temp.next = temp.next.next;
-        length --;
+        length--;
 
     }
 
@@ -118,8 +134,8 @@ public class LinkedList<T> {
         Node temp = firstNode;
         int index = 0;
         while (!temp.value.equals(str)) {
-            index ++;
-            if(index == length) {
+            index++;
+            if (index == length) {
                 return -1;
             }
             temp = temp.next;
@@ -127,7 +143,7 @@ public class LinkedList<T> {
         return index;
     }
 
-    private class  Node {
+    private class Node {
         private T value;
         private Node next;
 
@@ -143,10 +159,10 @@ public class LinkedList<T> {
         do {
             builder.append(temp.value);
             builder.append(",");
-            temp=temp.next;
+            temp = temp.next;
         } while (temp != null);
 
-        builder.deleteCharAt(builder.length() -1);
+        builder.deleteCharAt(builder.length() - 1);
 
         return builder.toString();
     }
